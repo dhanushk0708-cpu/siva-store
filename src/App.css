@@ -1,184 +1,179 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
+import Navbar from "./components/Navbar";
 
-.hero {
-  position: relative;
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import ProductDetails from "./pages/ProductDetails";
 
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Orders from "./pages/Orders";
+import Checkout from "./pages/Checkout";
 
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
+import ProtectedRoute from "./components/ProtectedRoute";
 
-  .framework,
-  .vite {
-    position: absolute;
-  }
+import CartContext from "./context/CartContext";
 
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
+function App() {
 
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
+  const [cart, setCart] = useState([]);
 
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
+  function addToCart(product) {
 
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
+    const existingProduct = cart.find(
+      (item) => item.id === product.id
+    );
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
+    if (existingProduct) {
 
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
+      setCart(
 
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
+        cart.map((item) =>
 
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
+          item.id === product.id
 
-#docs {
-  border-right: 1px solid var(--border);
+            ? {
+                ...item,
+                quantity: item.quantity + 1
+              }
 
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
+            : item
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
+        )
 
-  .logo {
-    height: 18px;
-  }
+      );
 
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
+    } else {
 
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
+      setCart([
 
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+        ...cart,
 
-    li {
-      flex: 1 1 calc(50% - 8px);
+        {
+          ...product,
+          quantity: 1
+        }
+
+      ]);
+
     }
 
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
   }
+
+  function removeFromCart(id) {
+
+    setCart(
+
+      cart.filter(
+
+        (item) => item.id !== id
+
+      )
+
+    );
+
+  }
+
+  return (
+
+    <CartContext.Provider
+
+      value={{
+
+        cart,
+
+        addToCart,
+
+        removeFromCart
+
+      }}
+
+    >
+
+      <Navbar />
+
+      <Routes>
+
+        <Route
+
+          path="/"
+
+          element={<Home />}
+
+        />
+
+        <Route
+
+          path="/product/:id"
+
+          element={<ProductDetails />}
+
+        />
+
+        <Route
+
+          path="/cart"
+
+          element={<Cart />}
+
+        />
+
+        <Route
+
+          path="/login"
+
+          element={<Login />}
+
+        />
+
+        <Route
+
+          path="/signup"
+
+          element={<Signup />}
+
+        />
+
+        <Route
+
+          path="/checkout"
+
+          element={
+
+            <ProtectedRoute>
+
+              <Checkout />
+
+            </ProtectedRoute>
+
+          }
+
+        />
+
+        <Route
+
+          path="/orders"
+
+          element={
+
+            <ProtectedRoute>
+
+              <Orders />
+
+            </ProtectedRoute>
+
+          }
+
+        />
+
+      </Routes>
+
+    </CartContext.Provider>
+
+  );
+
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
-  position: relative;
-  width: 100%;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
-
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
-}
+export default App;
