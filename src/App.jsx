@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
 
 import Navbar from "./components/Navbar";
 
@@ -7,40 +6,72 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import ProductDetails from "./pages/ProductDetails";
 
-import CartContext from "./context/CartContext";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Orders from "./pages/Orders";
+import Checkout from "./pages/Checkout";
+
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
-  const [cart, setCart] = useState([]);
+    return (
 
-  function addToCart(product) {
-    setCart([
-      ...cart,
-      product
-    ]);
-  }
+        <>
 
-  return (
-    <CartContext.Provider
-      value={{
-        cart,
-        addToCart
-      }}
-    >
-      <Navbar />
+            <Navbar />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
+            <Routes>
 
-        <Route path="/cart" element={<Cart />} />
+                <Route
+                    path="/"
+                    element={<Home />}
+                />
 
-        <Route
-          path="/product/:id"
-          element={<ProductDetails />}
-        />
-      </Routes>
-    </CartContext.Provider>
-  );
+                <Route
+                    path="/product/:id"
+                    element={<ProductDetails />}
+                />
+
+                <Route
+                    path="/cart"
+                    element={<Cart />}
+                />
+
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
+
+                <Route
+                    path="/signup"
+                    element={<Signup />}
+                />
+
+                <Route
+                    path="/checkout"
+                    element={
+                        <ProtectedRoute>
+                            <Checkout />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/orders"
+                    element={
+                        <ProtectedRoute>
+                            <Orders />
+                        </ProtectedRoute>
+                    }
+                />
+
+            </Routes>
+
+        </>
+
+    );
+
 }
 
 export default App;
