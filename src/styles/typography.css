@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+h1{
+
+    font-size:var(--font-xxl);
+
+}
+
+h2{
+
+    font-size:var(--font-xl);
+
+}
+
+h3{
+
+    font-size:var(--font-lg);
+
+}
+
+p{
+
+    font-size:var(--font-md);
+
+    line-height:1.8;
+
+}

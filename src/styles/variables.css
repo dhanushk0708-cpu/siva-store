@@ -1,0 +1,52 @@
+:root {
+
+    /* ========= Brand Colors ========= */
+
+    --primary-color: #7A1F3D;
+    --secondary-color: #C8A951;
+
+    --background-color: #FAF8F5;
+    --surface-color: #FFFFFF;
+
+    --text-primary: #2D2D2D;
+    --text-secondary: #666666;
+
+    --border-color: #E8E2DA;
+
+    /* ========= Typography ========= */
+
+    --font-family: "Poppins", sans-serif;
+
+    --font-xs: 12px;
+    --font-sm: 14px;
+    --font-md: 16px;
+    --font-lg: 20px;
+    --font-xl: 28px;
+    --font-xxl: 36px;
+
+    /* ========= Spacing ========= */
+
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 40px;
+    --space-xxl: 64px;
+
+    /* ========= Radius ========= */
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* ========= Shadow ========= */
+
+    --shadow-light: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-medium: 0 6px 18px rgba(0,0,0,0.12);
+
+    /* ========= Animation ========= */
+
+    --transition: all 0.3s ease;
+
+}

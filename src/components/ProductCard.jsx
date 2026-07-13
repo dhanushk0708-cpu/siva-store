@@ -7,21 +7,63 @@ function ProductCard({ product }) {
 
     const { addToCart } = useContext(CartContext);
 
+    // Find the main image
+    const mainImage = product.product_images?.find(
+        (img) => img.image_type === "main"
+    );
+
     return (
 
         <div
             style={{
                 border: "1px solid #ddd",
+                borderRadius: "10px",
                 padding: "15px",
-                marginBottom: "15px"
+                width: "280px",
+                margin: "15px"
             }}
         >
 
             <Link to={`/product/${product.id}`}>
 
-                <h3>{product.name}</h3>
+                <img
+                    src={
+                        mainImage
+                            ? mainImage.image_url
+                            : "https://via.placeholder.com/250x300?text=No+Image"
+                    }
+                    alt={product.product_name}
+                    style={{
+                        width: "100%",
+                        height: "320px",
+                        objectFit: "cover",
+                        borderRadius: "8px"
+                    }}
+                />
+
+                <h3>
+
+                    {product.product_name}
+
+                </h3>
 
             </Link>
+
+            <p>
+
+                <strong>
+
+                    Category :
+
+                </strong>
+
+                {
+
+                    product.categories?.category_name
+
+                }
+
+            </p>
 
             <p>
 
@@ -29,8 +71,34 @@ function ProductCard({ product }) {
 
             </p>
 
+            <p>
+
+                Stock :
+
+                {
+
+                    product.stock
+
+                }
+
+            </p>
+
+            <p>
+
+                Status :
+
+                {
+
+                    product.status
+
+                }
+
+            </p>
+
             <button
-                onClick={() => addToCart(product)}
+                onClick={() =>
+                    addToCart(product)
+                }
             >
 
                 Add To Cart
